@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-
+import { parseISO } from "date-fns";
 const MemberDetailModal = () => {
   const members = useSelector((state) => state.members);
   return (
@@ -52,7 +52,20 @@ const MemberDetailModal = () => {
                 border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide  "
               >
                 {members.currentMember?.dob
-                  ? members.currentMember.dob
+                  ? parseISO(members.currentMember.dob).toLocaleDateString()
+                  : "Undefined"}
+              </p>
+            </div>
+            <div className="my-2">
+              <label className="text-sm sm:text-base font-semibold">
+                Date Of Birth
+              </label>
+              <p
+                className="
+                border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide  "
+              >
+                {members.currentMember?.dod
+                  ? parseISO(members.currentMember.dod).toLocaleDateString()
                   : "Undefined"}
               </p>
             </div>

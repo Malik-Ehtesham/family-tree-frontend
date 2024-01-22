@@ -18,7 +18,8 @@ const MemberEditModal = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("Undefined");
   const [gender, setGender] = useState("Undefined");
-  const [dob, setDob] = useState(new Date());
+  const [dob, setDob] = useState(null);
+  const [dod, setDod] = useState(null);
   const [img, setImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
 
@@ -27,13 +28,15 @@ const MemberEditModal = () => {
   data.append("gender", gender);
   data.append("img", img);
   data.append("dob", dob);
+  data.append("dod", dod);
 
   useEffect(() => {
     const currentMember = members.currentMember;
 
     setName(currentMember.name || "Undefined");
     setGender(currentMember.gender || "Undefined");
-    setDob(currentMember.dob ? parseISO(currentMember.dob) : new Date());
+    setDob(currentMember.dob ? parseISO(currentMember.dob) : null);
+    setDod(currentMember.dod ? parseISO(currentMember.dod) : null);
     setImg(currentMember.img || null);
     setPreviewImg(currentMember.img || null);
   }, [members.currentMember]);
@@ -125,18 +128,24 @@ const MemberEditModal = () => {
                 <label className="text-sm sm:text-base font-semibold">
                   Date Of Birth
                 </label>
-                {/* <input
-                className=" w-full
-                border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
-                placeholder="Enter Date Of Birth"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-              /> */}
+
                 <DatePicker
                   className=" w-full
                 border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
                   selected={dob}
                   onChange={(date) => setDob(date)}
+                />
+              </div>
+              <div className="my-2 flex flex-col">
+                <label className="text-sm sm:text-base font-semibold">
+                  Date Of Death
+                </label>
+
+                <DatePicker
+                  className=" w-full
+                border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
+                  selected={dod}
+                  onChange={(date) => setDod(date)}
                 />
               </div>
             </div>
