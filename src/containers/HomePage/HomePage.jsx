@@ -2,7 +2,7 @@ import Home from "../../components/Home/Home";
 
 const HomePage = () => {
   return (
-    <div className="">
+    <div className="max-w-full">
       <Home />
     </div>
   );
