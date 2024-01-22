@@ -20,7 +20,7 @@ export const fetchCurrentUser = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        "http://localhost:5000/api/users",
+        "https://family-tree-backend-nine.vercel.app/api/users",
         config
       );
 
