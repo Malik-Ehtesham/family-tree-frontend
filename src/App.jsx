@@ -11,6 +11,8 @@ import PrivateRoutes from "./utils/Functions/PrivateRoutes";
 import TreesPage from "./containers/TreesPage/TreesPage";
 import FamilyTreePage from "./containers/FamilyTreePage/FamilyTreePage";
 import SettingsPage from "./containers/SettingsPage/SettingsPage";
+import ForgotPasswordPage from "./containers/ForgotPasswordPage/ForgotPasswordPage";
+import ResetPasswordPage from "./containers/ResetPasswordPage/ResetPasswordPage";
 
 function App() {
   return (
@@ -22,7 +24,11 @@ function App() {
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
         <Route path="/" element={<HomePage />} />
-
+        <Route path="/forgotPassword" element={<ForgotPasswordPage />} />{" "}
+        <Route
+          path="/resetPassword/:resetToken"
+          element={<ResetPasswordPage />}
+        />
         <Route
           path="/authentication/:method"
           element={<AuthenticationPage />}
