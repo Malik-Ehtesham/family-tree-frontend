@@ -58,7 +58,7 @@ const MemberDetailModal = () => {
             </div>
             <div className="my-2">
               <label className="text-sm sm:text-base font-semibold">
-                Date Of Birth
+                Date Of Death
               </label>
               <p
                 className="
