@@ -29,11 +29,14 @@ const FamilyTreeSection = ({ nodes }) => {
   useEffect(() => {
     const family = new FamilyTree(divRef.current, {
       nodes: nodes,
+      // template: "olivia",
       searchDisplayField: "name",
       showYScroll: true,
       showXScroll: true,
       nodeMouseClick: FamilyTree.action.none,
-      // enableTouch: true,
+      // enableTouch: strue,
+      // collapse: true,
+      // expand: true,
       zoom: { speed: 130, smooth: 10 },
       nodeMenu: {
         details: {

@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { parseISO } from "date-fns";
+import Datetime from "react-datetime";
+import { useForm } from "react-hook-form";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+
+import "react-datetime/css/react-datetime.css";
 
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -16,27 +23,27 @@ const MemberEditModal = () => {
 
   const members = useSelector((state) => state.members);
   const dispatch = useDispatch();
-  const [name, setName] = useState("Undefined");
-  const [gender, setGender] = useState("Undefined");
-  const [dob, setDob] = useState(null);
-  const [dod, setDod] = useState(null);
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState(new Date(0, 0, 1));
+  const [dod, setDod] = useState(new Date(0, 0, 1));
   const [img, setImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
 
   const data = new FormData();
-  data.append("name", name);
-  data.append("gender", gender);
+  data.append("name", name === "" ? members.currentMember?.name : name);
+  data.append("gender", gender === "" ? members.currentMember?.gender : gender);
   data.append("img", img);
-  data.append("dob", dob);
-  data.append("dod", dod);
+  data.append("dob", dob === null ? members.currentMember?.dob : dob);
+  data.append("dod", dod === null ? members.currentMember?.dod : dod);
 
   useEffect(() => {
     const currentMember = members.currentMember;
 
-    setName(currentMember.name || "Undefined");
-    setGender(currentMember.gender || "Undefined");
-    setDob(currentMember.dob ? parseISO(currentMember.dob) : null);
-    setDod(currentMember.dod ? parseISO(currentMember.dod) : null);
+    setName(currentMember.name || "");
+    setGender(currentMember.gender || "");
+    setDob(currentMember.dob ? parseISO(currentMember.dob) : new Date(0, 0, 1));
+    setDod(currentMember.dod ? parseISO(currentMember.dod) : new Date(0, 0, 1));
     setImg(currentMember.img || null);
     setPreviewImg(currentMember.img || null);
   }, [members.currentMember]);
@@ -55,8 +62,12 @@ const MemberEditModal = () => {
     reader.readAsDataURL(file);
   };
 
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
+  const handleChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  const formSubmitHandler = () => {
+    // e.preventDefault();
 
     const id = members.currentMember.id;
     dispatch(
@@ -109,39 +120,52 @@ const MemberEditModal = () => {
                   placeholder="Enter Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                />
+                />{" "}
               </div>
               <div className="my-2 flex flex-col">
                 <label className="text-sm sm:text-base font-semibold">
                   Gender
                 </label>
-                <input
-                  className=" w-full
-                border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
-                  placeholder="Enter Gender"
+
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
                   value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                />
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
               </div>
 
               <div className="my-2 flex flex-col">
                 <label className="text-sm sm:text-base font-semibold">
                   Date Of Birth
                 </label>
-
                 <DatePicker
+                  // {...register("dob", { required: true })}
+                  dateFormat="dd/MM/yyyy"
                   className=" w-full
                 border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
                   selected={dob}
                   onChange={(date) => setDob(date)}
-                />
+                />{" "}
               </div>
               <div className="my-2 flex flex-col">
                 <label className="text-sm sm:text-base font-semibold">
                   Date Of Death
                 </label>
-
                 <DatePicker
+                  // {...register("dod", { required: true })}
+                  dateFormat="dd/MM/yyyy"
                   className=" w-full
                 border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
                   selected={dod}
