@@ -25,8 +25,8 @@ const MemberEditModal = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
-  const [dob, setDob] = useState(new Date(0, 0, 1));
-  const [dod, setDod] = useState(new Date(0, 0, 1));
+  const [dob, setDob] = useState("");
+  const [dod, setDod] = useState("");
   const [img, setImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
 
@@ -34,16 +34,17 @@ const MemberEditModal = () => {
   data.append("name", name === "" ? members.currentMember?.name : name);
   data.append("gender", gender === "" ? members.currentMember?.gender : gender);
   data.append("img", img);
-  data.append("dob", dob === null ? members.currentMember?.dob : dob);
-  data.append("dod", dod === null ? members.currentMember?.dod : dod);
+  data.append("dob", dob === "" ? null : dob);
+  data.append("dod", dod === "" ? null : dod);
+  console.log(data);
 
   useEffect(() => {
     const currentMember = members.currentMember;
 
     setName(currentMember.name || "");
     setGender(currentMember.gender || "");
-    setDob(currentMember.dob ? parseISO(currentMember.dob) : new Date(0, 0, 1));
-    setDod(currentMember.dod ? parseISO(currentMember.dod) : new Date(0, 0, 1));
+    setDob(currentMember.dob ? parseISO(currentMember.dob) : "");
+    setDod(currentMember.dod ? parseISO(currentMember.dod) : "");
     setImg(currentMember.img || null);
     setPreviewImg(currentMember.img || null);
   }, [members.currentMember]);
@@ -151,7 +152,6 @@ const MemberEditModal = () => {
                   Date Of Birth
                 </label>
                 <DatePicker
-                  // {...register("dob", { required: true })}
                   dateFormat="dd/MM/yyyy"
                   className=" w-full
                 border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
@@ -164,7 +164,6 @@ const MemberEditModal = () => {
                   Date Of Death
                 </label>
                 <DatePicker
-                  // {...register("dod", { required: true })}
                   dateFormat="dd/MM/yyyy"
                   className=" w-full
                 border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
