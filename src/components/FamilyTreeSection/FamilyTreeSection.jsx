@@ -34,7 +34,7 @@ const FamilyTreeSection = ({ nodes }) => {
       showYScroll: true,
       showXScroll: true,
       nodeMouseClick: FamilyTree.action.none,
-      // enableTouch: strue,
+      enableTouch: true,
       // collapse: true,
       // expand: true,
       zoom: { speed: 130, smooth: 10 },
