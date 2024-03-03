@@ -8,6 +8,7 @@ const initialState = {
   selectedSpouse: {},
   showMemberModal: false,
   currentMember: {},
+  inviteCode: null,
   loading: false,
   error: "",
 };
@@ -24,7 +25,7 @@ export const fetchMembers = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        `https://family-tree-backend-nine.vercel.app/api/members/${familyTreeId}`,
+        `http://localhost:5000/api/members/${familyTreeId}`,
         config
       );
 
@@ -49,7 +50,7 @@ export const createMembers = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "https://family-tree-backend-nine.vercel.app/api/members",
+        "http://localhost:5000/api/members",
         memberData,
         config
       );
@@ -79,7 +80,7 @@ export const createSpouse = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "https://family-tree-backend-nine.vercel.app/api/members/spouse",
+        "http://localhost:5000/api/members/spouse",
         spouseData,
         config
       );
@@ -108,7 +109,7 @@ export const fetchSpouses = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `https://family-tree-backend-nine.vercel.app/api/members/spouses`,
+        `http://localhost:5000/api/members/spouses`,
         { pidsArray },
         config
       );
@@ -134,7 +135,7 @@ export const createParents = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "https://family-tree-backend-nine.vercel.app/api/members/parents",
+        "http://localhost:5000/api/members/parents",
         parentsData,
         config
       );
@@ -163,7 +164,7 @@ export const createChild = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "https://family-tree-backend-nine.vercel.app/api/members/child",
+        "http://localhost:5000/api/members/child",
         childData,
         config
       );
@@ -192,11 +193,9 @@ export const fetchSingleMember = createAsyncThunk(
         },
       };
       console.log(id);
-      console.log(
-        `https://family-tree-backend-nine.vercel.app/api/members/member/${id}`
-      );
+      console.log(`http://localhost:5000/api/members/member/${id}`);
       const response = await axios.get(
-        `https://family-tree-backend-nine.vercel.app/api/members/member/${id}`,
+        `http://localhost:5000/api/members/member/${id}`,
         config
       );
 
@@ -223,7 +222,7 @@ export const deleteMembers = createAsyncThunk(
       };
       console.log(memberId);
       await axios.delete(
-        `https://family-tree-backend-nine.vercel.app/api/members/${memberId}`,
+        `http://localhost:5000/api/members/${memberId}`,
         config
       );
       dispatch(fetchMembers(familyTreeId));
@@ -246,7 +245,7 @@ export const updateMembers = createAsyncThunk(
       const token = localStorage.getItem("token");
       console.log(memberData);
       const response = await axios.put(
-        `https://family-tree-backend-nine.vercel.app/api/members/${id}`,
+        `http://localhost:5000/api/members/${id}`,
         memberData,
         {
           headers: {
@@ -261,6 +260,36 @@ export const updateMembers = createAsyncThunk(
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchMemberByInviteCode = createAsyncThunk(
+  "members/fetchMemberByInviteCode",
+  async (inviteCode, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `http://localhost:5000/api/members/by-invite-code/${inviteCode}`,
+        config
+      );
+
+      localStorage.setItem("inviteCode", response.data.member.id);
+
+      // const data = {
+      //   inviteCode,
+      //   ...response.data,
+      // };
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -392,6 +421,19 @@ const membersSlice = createSlice({
       state.error = "";
     });
     builder.addCase(updateMembers.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(fetchMemberByInviteCode.pending, (state) => {
+      state.loading = true;
+      state.error = "";
+    });
+    builder.addCase(fetchMemberByInviteCode.fulfilled, (state, action) => {
+      state.loading = false;
+      state.inviteCode = action.payload.inviteCode;
+      state.error = "";
+    });
+    builder.addCase(fetchMemberByInviteCode.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

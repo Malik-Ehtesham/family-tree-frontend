@@ -16,9 +16,7 @@ export const auth = createAsyncThunk(
   async ({ isSignUp, signUpData, logInData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `https://family-tree-backend-nine.vercel.app/api/users/${
-          isSignUp ? "signup" : "login"
-        }`,
+        `http://localhost:5000/api/users/${isSignUp ? "signup" : "login"}`,
         isSignUp ? signUpData : logInData
       );
       localStorage.setItem("token", response.data.token);
@@ -36,7 +34,7 @@ export const forgotPassword = createAsyncThunk(
   async ({ email, toast }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `https://family-tree-backend-nine.vercel.app/api/users/forgotPassword`,
+        `http://localhost:5000/api/users/forgotPassword`,
         { email }
       );
 
@@ -63,7 +61,7 @@ export const resetPassword = createAsyncThunk(
   async ({ resetToken, resetPasswordData }, { rejectWithValue }) => {
     try {
       const response = await axios.patch(
-        `https://family-tree-backend-nine.vercel.app/api/users/resetPassword/${resetToken}`,
+        `http://localhost:5000/api/users/resetPassword/${resetToken}`,
         resetPasswordData
       );
 

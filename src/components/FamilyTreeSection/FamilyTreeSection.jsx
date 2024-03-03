@@ -12,12 +12,16 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "../../utils/Images/Logo/logo.jpg";
 import FamilyTree from "@balkangraph/familytree.js";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MemberDetailModal from "../MemberDetailModal/MemberDetailModal";
 import MemberEditModal from "../MemberEditModal/MemberEditModal";
 import MemberDeleteModal from "../MemberDeleteModal/MemberDeleteModal";
+import CopyImage from "../../utils/icons/copy-icon.svg";
+import { toast } from "react-toastify";
 
 const FamilyTreeSection = ({ nodes }) => {
   // --------VARIABLES DECALARATIONS-----------
+  const [isCopied, setIsCopied] = useState(false);
   const { id } = useParams();
   const familyTreeId = id;
 
@@ -25,6 +29,31 @@ const FamilyTreeSection = ({ nodes }) => {
   const members = useSelector((state) => state.members);
 
   const divRef = useRef();
+
+  const copyIcon = <img src={CopyImage} />;
+
+  const inviteCode = localStorage.getItem("inviteCode");
+
+  const copyToClipboard = async (inviteCode) => {
+    const code = inviteCode;
+
+    try {
+      await navigator.clipboard.writeText(code);
+      setIsCopied(true);
+      toast.success("Code Copied!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (error) {
+      console.error("Error copying to clipboard", error);
+    }
+  };
 
   useEffect(() => {
     const family = new FamilyTree(divRef.current, {
@@ -34,10 +63,20 @@ const FamilyTreeSection = ({ nodes }) => {
       showYScroll: true,
       showXScroll: true,
       nodeMouseClick: FamilyTree.action.none,
-      enableTouch: true,
+      // enableTouch: true,
       // collapse: true,
       // expand: true,
-      zoom: { speed: 130, smooth: 10 },
+      // zoom: { speed: 130, smooth: 10 },
+      // zoom: true,
+      // expand: true,
+      toolbar: {
+        layout: true,
+        zoom: true,
+        fit: true,
+        expandAll: false,
+        fullScreen: true,
+      },
+
       nodeMenu: {
         details: {
           text: "Details",
@@ -52,37 +91,129 @@ const FamilyTreeSection = ({ nodes }) => {
           text: "Edit",
           onClick: (sender) => {
             const id = sender;
-            // dispatch(fetchSingleMember(id))
-            //   .then((result) => {
-            //     // Check for successful authentication
-            //     console.log(result);
-            //     if (result.meta.requestStatus == "fulfilled") {
-            //       document.getElementById("member_modal_3").showModal();
-            //     }
-            //   })
-            //   .catch((error) => {
-            //     console.log(error);
-            //     // Handle authentication failure if needed
-            //   });
-            dispatch(fetchSingleMember(id));
+            dispatch(fetchSingleMember(id))
+              .then((result) => {
+                // Check for successful authentication
+                console.log(result);
+                console.log("INVITECODE:", inviteCode);
+                if (result.meta.requestStatus == "fulfilled") {
+                  if (
+                    result.payload.id === inviteCode ||
+                    result.payload.mid === inviteCode ||
+                    result.payload.fid === inviteCode ||
+                    result.payload?.pids.includes(inviteCode)
+                  ) {
+                    document.getElementById("member_modal_3").showModal();
+                  } else if (!inviteCode) {
+                    document.getElementById("member_modal_3").showModal();
+                  } else {
+                    toast.error("Permession Denied!", {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                // Handle authentication failure if needed
+              });
+            // dispatch(fetchSingleMember(id));
 
-            document.getElementById("member_modal_3").showModal();
+            // document.getElementById("member_modal_3").showModal();
           },
         },
         add: {
           text: "Add",
           onClick: (sender, args) => {
             const id = sender;
-            dispatch(fetchSingleMember(id));
-            document.getElementById("member_modal_2").showModal();
+            dispatch(fetchSingleMember(id))
+              .then((result) => {
+                // Check for successful authentication
+                console.log(result);
+                if (result.meta.requestStatus == "fulfilled") {
+                  if (
+                    result.payload.id === inviteCode ||
+                    result.payload.mid === inviteCode ||
+                    result.payload.fid === inviteCode ||
+                    result.payload?.pids.includes(inviteCode)
+                  ) {
+                    document.getElementById("member_modal_2").showModal();
+                  } else if (!inviteCode) {
+                    document.getElementById("member_modal_2").showModal();
+                  } else {
+                    toast.error("Permession Denied!", {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                // Handle authentication failure if needed
+              });
           },
         },
         remove: {
           text: "Remove",
           onClick: (sender) => {
             const id = sender;
-            dispatch(fetchSingleMember(id));
-            document.getElementById("member_modal_5").showModal();
+            dispatch(fetchSingleMember(id))
+              .then((result) => {
+                // Check for successful authentication
+                console.log(result);
+                if (result.meta.requestStatus == "fulfilled") {
+                  if (result.payload.id === inviteCode) {
+                    document.getElementById("member_modal_5").showModal();
+                  } else if (!inviteCode) {
+                    document.getElementById("member_modal_5").showModal();
+                  } else {
+                    toast.error("Permession Denied!", {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                // Handle authentication failure if needed
+              });
+          },
+        },
+        copy: {
+          // icon: copyIcon,
+          text: "Copy Invite Code",
+          onClick: (sender) => {
+            const id = sender;
+            dispatch(fetchSingleMember(id))
+              .then((result) => {
+                console.log(result);
+                if (result.meta.requestStatus === "fulfilled") {
+                  copyToClipboard(result.payload.id);
+                }
+              })
+              .catch(() => {});
+            // document.getElementById("member_modal_5").showModal();
           },
         },
       },

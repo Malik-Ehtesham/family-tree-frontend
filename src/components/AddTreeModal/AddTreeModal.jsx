@@ -35,6 +35,7 @@ const AddTreeModal = () => {
             name: "Root",
             gender: "male",
             rootMember: true,
+            isAdmin: true,
             familyTreeId: result.payload._id,
           };
           dispatch(createMembers({ memberData, dispatch, fetchMembers }));

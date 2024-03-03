@@ -7,7 +7,7 @@ import AddTreeModal from "../AddTreeModal/AddTreeModal";
 import { deleteTrees, fetchTrees } from "../../store/features/trees/treesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const TreeCard = (props) => {
@@ -15,6 +15,7 @@ const TreeCard = (props) => {
   // ------VARIABLES DECALARATIONS---------
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const id = props.id;
 
@@ -60,13 +61,18 @@ const TreeCard = (props) => {
         console.log(error);
       });
   };
+
+  const goToFamilyTreeHandler = () => {
+    localStorage.setItem("inviteCode", "");
+    navigate(`/familyTree/${props.id}`);
+  };
   return (
     <div>
       {props.add ? (
         <AddTreeModal />
       ) : (
         <>
-          <Link to={`/familyTree/${props.id}`}>
+          <div onClick={goToFamilyTreeHandler}>
             <div className="w-36 sm:w-52 shadow-lg hover: border-4 border-gray-500 rounded-lg bg-neutral-100 cursor-pointer mx-5 mt-5 mb-2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
               <img
                 src={TreeIcon}
@@ -76,7 +82,7 @@ const TreeCard = (props) => {
                 {props.name}
               </p>
             </div>
-          </Link>
+          </div>
           <div className="flex justify-between">
             <ReplyIcon
               className="text-blue-600 cursor-pointer mx-5"

@@ -13,6 +13,8 @@ import FamilyTreePage from "./containers/FamilyTreePage/FamilyTreePage";
 import SettingsPage from "./containers/SettingsPage/SettingsPage";
 import ForgotPasswordPage from "./containers/ForgotPasswordPage/ForgotPasswordPage";
 import ResetPasswordPage from "./containers/ResetPasswordPage/ResetPasswordPage";
+import InviteCodePage from "./containers/InviteCodePage/InviteCodePage";
+import DetailsPage from "./containers/DetailsPage/DetailsPage";
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
           <Route path="/trees" element={<TreesPage />} />
           <Route path="/familytree/:id" element={<FamilyTreePage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/details" element={<DetailsPage />} />
         </Route>
         <Route path="/" element={<HomePage />} />
+        <Route path="/invitecode" element={<InviteCodePage />} />
         <Route path="/forgotPassword" element={<ForgotPasswordPage />} />{" "}
         <Route
           path="/resetPassword/:resetToken"

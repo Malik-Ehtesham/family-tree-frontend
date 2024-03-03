@@ -64,7 +64,8 @@ const AuthenticationForm = () => {
         // Check for successful authentication
         if (result.payload && result.payload.token) {
           // Get the previous path from the state (if it exists)
-          navigate(-1);
+          // navigate(-1);
+          navigate("/invitecode");
         }
       })
       .catch((error) => {
