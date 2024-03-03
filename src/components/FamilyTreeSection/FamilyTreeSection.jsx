@@ -70,7 +70,7 @@ const FamilyTreeSection = ({ nodes }) => {
       // zoom: true,
       // expand: true,
       toolbar: {
-        layout: true,
+        // layout: true,
         zoom: true,
         fit: true,
         expandAll: false,
