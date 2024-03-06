@@ -187,19 +187,25 @@ const MemberAddModal = () => {
   let parentsButton;
 
   // Check if the object has a property named 'key' and it has a non-null value using optional chaining
-  if ("mid" in members.currentMember && "fid" in members.currentMember) {
-    // The object has the property 'key' with a non-null value
-    parentsButton = (
-      <button className="btn btn-secondary my-2 w-full cursor-not-allowed btn-disabled">
-        Add Parents
-      </button>
-    );
-  } else {
+  if (
+    (members.currentMember?.mid === null ||
+      members.currentMember?.mid === undefined) &&
+    (members.currentMember?.fid === null ||
+      members.currentMember?.fid === undefined)
+  ) {
+    // Trigger else block when both mid and fid are null or undefined
     parentsButton = (
       <button
         className="btn btn-secondary my-2 w-full"
         onClick={addParentsHandler}
       >
+        Add Parents
+      </button>
+    );
+  } else {
+    // Trigger if block when either mid or fid is present and not null
+    parentsButton = (
+      <button className="btn btn-secondary my-2 w-full cursor-not-allowed btn-disabled">
         Add Parents
       </button>
     );

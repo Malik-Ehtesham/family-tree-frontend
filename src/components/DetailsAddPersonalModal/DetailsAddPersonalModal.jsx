@@ -130,6 +130,8 @@ const DetailsAddPersonalModal = (props) => {
                   progress: undefined,
                   theme: "dark",
                 });
+
+                navigate(`/familyTree/${result.payload.familyTreeId}`);
                 props.setPersonalButtonIsActive(false);
                 props.setSpouseButtonIsActive(true);
                 props.setCurrentDetails("Spouse Details");
@@ -159,118 +161,129 @@ const DetailsAddPersonalModal = (props) => {
   };
 
   return (
-    <div className="flex justify-center my-5 p-5 sm:p-0">
-      <div className="">
-        <form
-          onSubmit={handleSubmit(formSubmitHandler)}
-          className="grid grid-cols-1 sm:grid-cols-2  p-0 
-       border-4 border-emerald-400 rounded-lg   "
+    <>
+      <div className="flex justify-center">
+        <button
+          className={`btn mt-5 text-white m-1 cursor-default btn-secondary`}
         >
-          <div className="flex flex-col items-center justify-center bg-emerald-400 rounded-lg p-4">
-            {img ? (
-              <img
-                className="rounded-full w-36 h-36 sm:w-44 sm:h-44 border-4"
-                src={previewImg}
-                alt="Member"
-              />
-            ) : (
-              <div>Select an Image</div>
-            )}
-            {/* File input for selecting an image */}
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="file-input file-input-bordered file-input-warning w-full max-w-xs mt-5"
-            />
-          </div>
-          <div className="p-4">
-            <div className="my-2 flex flex-col">
-              <label className="text-sm sm:text-base font-semibold">Name</label>
-              <input
-                {...register("name", { required: true })}
-                className=" w-full
-              border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
-                placeholder="Enter Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />{" "}
-              {errors.name && (
-                <span className="text-red-500 font-semibold">
-                  This field is required
-                </span>
+          Add your Personal Details
+        </button>
+      </div>
+      <div className="flex justify-center my-5 p-5 sm:p-0">
+        <div className="">
+          <form
+            onSubmit={handleSubmit(formSubmitHandler)}
+            className="grid grid-cols-1 sm:grid-cols-2  p-0 
+       border-4 border-emerald-400 rounded-lg   "
+          >
+            <div className="flex flex-col items-center justify-center bg-emerald-400 rounded-lg p-4">
+              {img ? (
+                <img
+                  className="rounded-full w-36 h-36 sm:w-44 sm:h-44 border-4"
+                  src={previewImg}
+                  alt="Member"
+                />
+              ) : (
+                <div>Select an Image</div>
               )}
+              {/* File input for selecting an image */}
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="file-input file-input-bordered file-input-warning w-full max-w-xs mt-5"
+              />
             </div>
-            {props.currentDetails !== "Parents Details" ? (
+            <div className="p-4">
               <div className="my-2 flex flex-col">
                 <label className="text-sm sm:text-base font-semibold">
-                  Gender
+                  Name
                 </label>
-
-                <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={gender}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
-                  />
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                </RadioGroup>
-              </div>
-            ) : null}
-
-            <div className="my-2 flex flex-col">
-              <label className="text-sm sm:text-base font-semibold">
-                Date Of Birth
-              </label>
-              <DatePicker
-                dateFormat="dd/MM/yyyy"
-                className=" w-full
+                <input
+                  {...register("name", { required: true })}
+                  className=" w-full
               border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
-                selected={dob}
-                onChange={(date) => setDob(date)}
-              />{" "}
-            </div>
-            <div className="my-2 flex flex-col">
-              <label className="text-sm sm:text-base font-semibold">
-                Date Of Death
-              </label>
-              <DatePicker
-                dateFormat="dd/MM/yyyy"
-                className=" w-full
-              border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
-                selected={dod}
-                onChange={(date) => setDod(date)}
-              />
-            </div>
-            {props.currentDetails !== "Parents Details" ? (
-              <div className="flex justify-end">
-                <button
-                  className="btn btn-error text-white  m-2"
-                  type="button"
-                  onClick={cancelFormSubmitHandler}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="btn btn-success text-white  m-2"
-                  type="submit"
-                >
-                  Submit
-                </button>
+                  placeholder="Enter Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />{" "}
+                {errors.name && (
+                  <span className="text-red-500 font-semibold">
+                    This field is required
+                  </span>
+                )}
               </div>
-            ) : null}
-          </div>
-        </form>
+              {props.currentDetails !== "Parents Details" ? (
+                <div className="my-2 flex flex-col">
+                  <label className="text-sm sm:text-base font-semibold">
+                    Gender
+                  </label>
+
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={gender}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                  </RadioGroup>
+                </div>
+              ) : null}
+
+              <div className="my-2 flex flex-col">
+                <label className="text-sm sm:text-base font-semibold">
+                  Date Of Birth
+                </label>
+                <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  className=" w-full
+              border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
+                  selected={dob}
+                  onChange={(date) => setDob(date)}
+                />{" "}
+              </div>
+              <div className="my-2 flex flex-col">
+                <label className="text-sm sm:text-base font-semibold">
+                  Date Of Death
+                </label>
+                <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  className=" w-full
+              border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
+                  selected={dod}
+                  onChange={(date) => setDod(date)}
+                />
+              </div>
+              {props.currentDetails !== "Parents Details" ? (
+                <div className="flex justify-end">
+                  <button
+                    className="btn btn-error text-white  m-2"
+                    type="button"
+                    onClick={cancelFormSubmitHandler}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="btn btn-success text-white  m-2"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

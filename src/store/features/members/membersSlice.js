@@ -173,7 +173,7 @@ export const createChild = createAsyncThunk(
 
       dispatch(fetchMembers(familyTreeId));
       console.log(response);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.log(error);
 
@@ -369,8 +369,9 @@ const membersSlice = createSlice({
       state.loading = false;
       state.error = "";
     });
-    builder.addCase(createChild.fulfilled, (state) => {
+    builder.addCase(createChild.fulfilled, (state, action) => {
       state.loading = false;
+      // state.members = [...state.members, action.payload];
       state.error = "";
     });
     builder.addCase(createChild.rejected, (state, action) => {

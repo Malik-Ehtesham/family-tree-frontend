@@ -17,7 +17,7 @@ const TreesSection = () => {
   return (
     <div className="flex justify-center my-5">
       <div className="sm:w-5/6">
-        <div className="flex justify-end">
+        <div className="flex justify-center sm:justify-end mx-5 mb-10">
           <button
             className="px-8 py-3 bg-emerald-400 rounded-lg font-bold hover:text-white transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300 "
             onClick={() => navigate("/invitecode")}

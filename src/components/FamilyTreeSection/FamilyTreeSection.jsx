@@ -59,21 +59,25 @@ const FamilyTreeSection = ({ nodes }) => {
     const family = new FamilyTree(divRef.current, {
       nodes: nodes,
       // template: "olivia",
-      searchDisplayField: "name",
+
+      searchFields: ["name"],
       showYScroll: true,
       showXScroll: true,
       nodeMouseClick: FamilyTree.action.none,
+      scaleInitial: FamilyTree.match.boundary,
       // enableTouch: true,
-      // collapse: true,
+      // collapse: { level: 10, allChildren: false },
       // expand: true,
-      // zoom: { speed: 130, smooth: 10 },
-      // zoom: true,
+      // collapse: { level: 10, allChildren: true },
+
+      zoom: { speed: 130, smooth: 10 },
+      min: true,
+      // zoom: false,
       // expand: true,
       toolbar: {
-        // layout: true,
         zoom: true,
         fit: true,
-        expandAll: false,
+        expandAll: true,
         fullScreen: true,
       },
 
@@ -247,7 +251,7 @@ const FamilyTreeSection = ({ nodes }) => {
         id="tree"
         ref={divRef}
         className="border-2 border-emerald-500 rounded-lg sm:w-5/6 mx-2 sm:mx-auto my-20"
-        style={{ height: "75vh" }}
+        style={{ height: "80vh" }}
       ></div>
       <MemberAddModal />
       <MemberDetailModal />
