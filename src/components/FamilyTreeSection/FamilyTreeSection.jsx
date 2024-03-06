@@ -77,7 +77,7 @@ const FamilyTreeSection = ({ nodes }) => {
       toolbar: {
         zoom: true,
         fit: true,
-        expandAll: true,
+        // expandAll: true,
         fullScreen: true,
       },
 
