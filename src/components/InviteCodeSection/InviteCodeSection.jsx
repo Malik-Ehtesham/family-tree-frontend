@@ -45,12 +45,12 @@ const InviteCodeSection = () => {
             ) : null}
           </div>
           <div className="flex flex-col justify-between">
-            <button
+            {/* <button
               className="btn text-lg btn-error text-white  my-2"
               onClick={() => navigate("/")}
             >
               Skip
-            </button>
+            </button> */}
             <button
               className="btn text-lg btn-success text-white "
               onClick={submitFormHandler}

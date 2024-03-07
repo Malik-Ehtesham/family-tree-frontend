@@ -6,6 +6,7 @@ import Spinner from "../Spinner/Spinner";
 import { fetchMembers } from "../../store/features/members/membersSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const FamilyTree = () => {
   const { id } = useParams();
@@ -19,9 +20,21 @@ const FamilyTree = () => {
 
   const members = useSelector((state) => state.members);
 
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  let text;
+  if (isMobile) {
+    text = (
+      <p className="text-center text-gray-500  font-medium mt-5">
+        Use Toolbar for Zoom In and Out
+      </p>
+    );
+  }
+
   return (
     <div className="flex justify-between flex-col min-h-screen ">
       <Header />
+      {text}
       {members.loading ? (
         <Spinner />
       ) : (

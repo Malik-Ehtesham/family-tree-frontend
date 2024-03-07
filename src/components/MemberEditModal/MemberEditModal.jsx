@@ -24,6 +24,7 @@ const MemberEditModal = () => {
   const members = useSelector((state) => state.members);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [familyName, setFamilyName] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [dod, setDod] = useState("");
@@ -32,6 +33,10 @@ const MemberEditModal = () => {
 
   const data = new FormData();
   data.append("name", name === "" ? members.currentMember?.name : name);
+  data.append(
+    "familyName",
+    familyName === "" ? members.currentMember?.familyName : familyName
+  );
   data.append("gender", gender === "" ? members.currentMember?.gender : gender);
   data.append("img", img);
   data.append("dob", dob === "" ? null : dob);
@@ -42,6 +47,7 @@ const MemberEditModal = () => {
     const currentMember = members.currentMember;
 
     setName(currentMember.name || "");
+    setFamilyName(currentMember.familyName || "");
     setGender(currentMember.gender || "");
     setDob(currentMember.dob ? parseISO(currentMember.dob) : "");
     setDod(currentMember.dod ? parseISO(currentMember.dod) : "");
@@ -121,6 +127,18 @@ const MemberEditModal = () => {
                   placeholder="Enter Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                />{" "}
+              </div>
+              <div className="my-2 flex flex-col">
+                <label className="text-sm sm:text-base font-semibold">
+                  Family Name
+                </label>
+                <input
+                  className=" w-full
+                border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold tracking-wide "
+                  placeholder="Enter Family Name"
+                  value={familyName}
+                  onChange={(e) => setFamilyName(e.target.value)}
                 />{" "}
               </div>
               <div className="my-2 flex flex-col">

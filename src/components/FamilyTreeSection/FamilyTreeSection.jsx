@@ -78,7 +78,7 @@ const FamilyTreeSection = ({ nodes }) => {
         zoom: true,
         fit: true,
         // expandAll: true,
-        fullScreen: true,
+        // fullScreen: true,
       },
 
       nodeMenu: {
@@ -235,22 +235,12 @@ const FamilyTreeSection = ({ nodes }) => {
     };
   }, [nodes]);
 
-  const handleNodeClick = () => {
-    // document.getElementById("member_modal_3").showModal();
-    // dispatch(setShowMemberModal());
-    // console.log(nodeDatum);
-    // const name = nodeDatum.name;
-    // dispatch(fetchSingleMember({ name, familyTreeId }));
-    // const clickedNodeData = divRef.current.getSelectedNode()?.data;
-    // console.log("Clicked node data:", node);
-  };
-
   return (
     <>
       <div
         id="tree"
         ref={divRef}
-        className="border-2 border-emerald-500 rounded-lg sm:w-5/6 mx-2 sm:mx-auto my-20"
+        className="border-2 border-emerald-500 rounded-lg sm:w-5/6 mx-2 sm:mx-auto md:mt-20 mb-20"
         style={{ height: "80vh" }}
       ></div>
       <MemberAddModal />
@@ -262,88 +252,3 @@ const FamilyTreeSection = ({ nodes }) => {
 };
 
 export default FamilyTreeSection;
-
-// import { useEffect, useState } from "react";
-// import Tree from "react-d3-tree";
-// import MemberModal from "../MemberModal/MemberModal";
-// import {
-//   fetchMembers,
-//   fetchSingleMember,
-//   setCurrentMember,
-// } from "../../store/features/members/membersSlice";
-// import { useParams } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import Logo from "../../utils/Images/Logo/logo.jpg";
-
-// const renderNodeWithCustomEvents = ({
-//   nodeDatum,
-//   toggleNode,
-//   handleNodeClick,
-// }) => (
-//   <g>
-//     <circle
-//       r="15"
-//       className=""
-//       onClick={() => {
-//         handleNodeClick(nodeDatum);
-//       }}
-//     />
-//     {/* <img className="border-2 rounded-full" r="15" src={Logo} /> */}
-//     <text
-//       fill="black"
-//       strokeWidth="1"
-//       x="20"
-//       y="-3"
-//       onClick={toggleNode}
-//       className="text-sm "
-//     >
-//       {nodeDatum?.name}
-//     </text>
-//     {nodeDatum.attributes?.gender && (
-//       <text fill="black" x="20" dy="15" strokeWidth="1" className="text-sm  ">
-//         {nodeDatum.attributes?.gender}
-//       </text>
-//     )}
-//   </g>
-// );
-
-// const FamilyTreeSection = () => {
-// // --------VARIABLES DECALARATIONS-----------
-// const { id } = useParams();
-// const familyTreeId = id;
-
-// const dispatch = useDispatch();
-// const members = useSelector((state) => state.members);
-
-//   // ----------USE STATES-------
-
-// const handleNodeClick = (nodeDatum) => {
-//   document.getElementById("member_modal_3").showModal();
-//   console.log(nodeDatum);
-
-//   const name = nodeDatum.name;
-//   dispatch(fetchSingleMember({ name, familyTreeId }));
-// };
-
-//   return (
-//     <div>
-//       <div className=" flex justify-center mx-0 my-10  sm:my-20  sm:mx-4">
-//         <div
-//           id="treeWrapper"
-//           className="sm:w-5/6 h-96 border-4 border-emerald-500 rounded-lg"
-//         >
-//           <Tree
-//             data={members.members.length === 0 ? {} : members.members}
-//             translate={{ x: 200, y: 200 }}
-//             renderCustomNodeElement={(rd3tProps) =>
-//               renderNodeWithCustomEvents({ ...rd3tProps, handleNodeClick })
-//             }
-//           />
-//           <MemberModal />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FamilyTreeSection;

@@ -17,14 +17,14 @@ const TreesSection = () => {
   return (
     <div className="flex justify-center my-5">
       <div className="sm:w-5/6">
-        <div className="flex justify-center sm:justify-end mx-5 mb-10">
+        {/* <div className="flex justify-center sm:justify-end mx-5 mb-10">
           <button
             className="px-8 py-3 bg-emerald-400 rounded-lg font-bold hover:text-white transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300 "
             onClick={() => navigate("/invitecode")}
           >
             Enter Invite Code <EastIcon className="mb-0.5" />
           </button>
-        </div>
+        </div> */}
         {trees.trees?.length === 0 ? (
           <div className="flex flex-col justify-center items-center">
             <p className="font-black text-3xl p-4 sm:text-4xl lg:text-5xl tracking-widest text-center text-green-600 my-5  sm:my-10">

@@ -45,6 +45,19 @@ const MemberDetailModal = () => {
             </div>{" "}
             <div className="my-2">
               <label className="text-sm sm:text-base font-semibold">
+                Family Name
+              </label>
+              <p
+                className="
+                border-2 rounded-lg sm:text-lg border-emerald-400 p-2 sm:p-3 font-semibold  tracking-wide "
+              >
+                {members.currentMember?.familyName
+                  ? members.currentMember.familyName
+                  : "Undefined"}
+              </p>
+            </div>{" "}
+            <div className="my-2">
+              <label className="text-sm sm:text-base font-semibold">
                 Date Of Birth
               </label>
               <p

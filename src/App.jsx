@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import AuthenticationPage from "./containers/AuthenticationPage/AuthenticationPage";
 
@@ -18,6 +20,7 @@ import DetailsPage from "./containers/DetailsPage/DetailsPage";
 
 function App() {
   return (
+    // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className=" min-h-screen" style={{ fontFamily: " sans-serif" }}>
       <Routes>
         <Route element={<PrivateRoutes />}>
@@ -40,6 +43,7 @@ function App() {
       </Routes>
       <ToastContainer />
     </div>
+    // </LocalizationProvider>
   );
 }
 
