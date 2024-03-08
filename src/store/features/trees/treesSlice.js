@@ -21,7 +21,7 @@ export const fetchTrees = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        "http://localhost:5000/api/familyTrees",
+        "https://family-tree-backend-nine.vercel.app/api/familyTrees",
         config
       );
 
@@ -46,7 +46,7 @@ export const createTrees = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/familyTrees",
+        "https://family-tree-backend-nine.vercel.app/api/familyTrees",
         treeData,
         config
       );
@@ -73,7 +73,10 @@ export const deleteTrees = createAsyncThunk(
         },
       };
       console.log(id);
-      await axios.delete(`http://localhost:5000/api/familyTrees/${id}`, config);
+      await axios.delete(
+        `https://family-tree-backend-nine.vercel.app/api/familyTrees/${id}`,
+        config
+      );
 
       dispatch(fetchTrees());
 
@@ -99,7 +102,7 @@ export const updateAgents = createAsyncThunk(
         },
       };
       const response = await axios.put(
-        `http://localhost:5000/api/agents/${id}`,
+        `https://family-tree-backend-nine.vercel.app/api/agents/${id}`,
         data,
         config
       );

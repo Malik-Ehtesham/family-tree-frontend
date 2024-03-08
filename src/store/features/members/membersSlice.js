@@ -25,7 +25,7 @@ export const fetchMembers = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        `http://localhost:5000/api/members/${familyTreeId}`,
+        `https://family-tree-backend-nine.vercel.app/api/members/${familyTreeId}`,
         config
       );
 
@@ -50,7 +50,7 @@ export const createMembers = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/members",
+        "https://family-tree-backend-nine.vercel.app/api/members",
         memberData,
         config
       );
@@ -80,7 +80,7 @@ export const createSpouse = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/members/spouse",
+        "https://family-tree-backend-nine.vercel.app/api/members/spouse",
         spouseData,
         config
       );
@@ -109,7 +109,7 @@ export const fetchSpouses = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `http://localhost:5000/api/members/spouses`,
+        `https://family-tree-backend-nine.vercel.app/api/members/spouses`,
         { pidsArray },
         config
       );
@@ -135,7 +135,7 @@ export const createParents = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/members/parents",
+        "https://family-tree-backend-nine.vercel.app/api/members/parents",
         parentsData,
         config
       );
@@ -164,7 +164,7 @@ export const createChild = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        "http://localhost:5000/api/members/child",
+        "https://family-tree-backend-nine.vercel.app/api/members/child",
         childData,
         config
       );
@@ -193,9 +193,11 @@ export const fetchSingleMember = createAsyncThunk(
         },
       };
       console.log(id);
-      console.log(`http://localhost:5000/api/members/member/${id}`);
+      console.log(
+        `https://family-tree-backend-nine.vercel.app/api/members/member/${id}`
+      );
       const response = await axios.get(
-        `http://localhost:5000/api/members/member/${id}`,
+        `https://family-tree-backend-nine.vercel.app/api/members/member/${id}`,
         config
       );
 
@@ -222,7 +224,7 @@ export const deleteMembers = createAsyncThunk(
       };
       console.log(memberId);
       await axios.delete(
-        `http://localhost:5000/api/members/${memberId}`,
+        `https://family-tree-backend-nine.vercel.app/api/members/${memberId}`,
         config
       );
       dispatch(fetchMembers(familyTreeId));
@@ -245,7 +247,7 @@ export const updateMembers = createAsyncThunk(
       const token = localStorage.getItem("token");
       console.log(memberData);
       const response = await axios.put(
-        `http://localhost:5000/api/members/${id}`,
+        `https://family-tree-backend-nine.vercel.app/api/members/${id}`,
         memberData,
         {
           headers: {
@@ -275,7 +277,7 @@ export const fetchMemberByInviteCode = createAsyncThunk(
         },
       };
       const response = await axios.get(
-        `http://localhost:5000/api/members/by-invite-code/${inviteCode}`,
+        `https://family-tree-backend-nine.vercel.app/api/members/by-invite-code/${inviteCode}`,
         config
       );
 
